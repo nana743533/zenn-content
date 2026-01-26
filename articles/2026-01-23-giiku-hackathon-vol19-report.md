@@ -17,7 +17,7 @@ published_at: "2025-01-23 21:50"
 
 ### 目標
 - 機能要件
-AWS(初)を使ってデプロイ
+AWS(初)を使ってデプロイ：IaaS (Infrastructure as a Service) の基本である EC2 を中心に、ネットワーク（VPC）から自力で構築する
 ReactNative(初)を使ってアプリ開発
 認証機能を作る
 レーティング機能を作る
@@ -46,7 +46,7 @@ Day 14: 最終調整 &
 23日 ハッカソン開始　アイディア出し なんとなくの計画だて
 24日 なし
 25日 なし
-26日 DesignDocを書く
+26日 DesignDocのプロット作成。EC2インスタンス作成。 次は
 27日
 28日
 29日
@@ -60,6 +60,11 @@ Day 14: 最終調整 &
 6日
 7日
 8日 発表
+
+
+### 次やること
+EC2インスタンスに接続から。
+https://www.notion.so/vol19-2ed5abb62d54804a9dc6efdd4d1f8a69?source=copy_link
 
 ### DesignDoc
 ```
