@@ -35,36 +35,38 @@ ReactNative(初)を使ってアプリ開発
 
 ### 計画
 1週目前半　AWS環境構築
-Day 1-2: セットアップ & 環境構築
-Day 3-5: オセロロジックの実装
-Day 6-7: ユーザー認証 & ルーム管理
-Day 8-10: Action Cableによる双方向通信
-Day 11-13: AWSへの最終デプロイ & インフラ調整
-Day 14: 最終調整 & 
+Day 1-2: EC2セットアップ, Kamal配置, Nginx設定
+Day 3-5: Schema 設計
+Day 6-7: オセロロジック & ユーザー認証 & ルーム管理 
+Day 8-10: Action Cableによる双方向通信 & Docker 化
+Day 11-13: AWSへの最終デプロイ & インフラ調整(kamal)
+Day 14: 最終調整
 
 ### やったこと目次
 23日 ハッカソン開始　アイディア出し なんとなくの計画だて
 24日 なし
 25日 なし
 26日 DesignDocのプロット作成。EC2インスタンス作成。
-27日
-28日
-29日
-30日 1週目のマイルストーン
+27日 EC2ログイン。計画修正。
+28日 なし
+29日 なし
+30日 1週目のマイルストーン モデリングをする。
 31日
 1日
 2日
 3日
 4日
 5日
-6日
+6日 この辺までに作り終えたい
+
 7日
 8日 発表
 
 
 ### 次やること
-EC2インスタンスに接続から。
-https://www.notion.so/vol19-2ed5abb62d54804a9dc6efdd4d1f8a69?source=copy_link
+EC2インスタンスで、余計なrbenvの削除、kamalのセットアップ
+全体システム設計図の確定 (React Native app vpc ec2 nginx kamalによるdocker engine rails-api RDS Redis)
+モデリング
 
 ### DesignDoc
 ```
@@ -101,4 +103,41 @@ Railsサーバーがルームを作成し、WebSocketチャネルを確立。
 
 7. Milestones (マイルストーン)
 
+```
+
+```mermaid
+graph TB
+    %% ノードの定義
+    subgraph UserDevice ["ユーザー端末 (Smartphone)"]
+        RN["React Native App"]
+    end
+
+    subgraph AWS ["AWS Cloud (VPC)"]
+        subgraph EC2 ["EC2 Instance (Amazon Linux)"]
+            Nginx["Nginx (Reverse Proxy)"]
+            
+            subgraph Docker ["Docker Engine (Managed by Kamal)"]
+                KP["Kamal Proxy"]
+                Rails["Rails API (Container)"]
+            end
+        end
+
+        DB[("PostgreSQL (Database)")]
+    end
+
+    subgraph External ["外部サービス"]
+        Registry["Docker Registry (Docker Hub/GHCR)"]
+    end
+
+    %% 接続の定義
+    RN -- "HTTPS (Port 443)" --> Nginx
+    Nginx -- "HTTP (Port 80)" --> KP
+    KP -- "Local HTTP" --> Rails
+    Rails -- "SQL (Port 5432)" --> DB
+    Registry -. "docker pull" .-> Rails
+
+    %% スタイルの設定
+    style UserDevice fill:#f9f,stroke:#333,stroke-width:2px
+    style EC2 fill:#fff,stroke:#ff9900,stroke-width:2px
+    style DB fill:#e1f5fe,stroke:#01579b
 ```
